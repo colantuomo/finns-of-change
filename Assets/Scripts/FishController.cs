@@ -3,7 +3,6 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
 
 public class FishController : MonoBehaviour
 {
@@ -206,11 +205,13 @@ public class FishController : MonoBehaviour
         transform.DOMoveY(transform.position.y + 1f, 3f);
     }
 
-    private async void CameraShake()
+    private void CameraShake()
     {
         _mainCamMultiChannelPerlin.m_AmplitudeGain = 3.0f;
-        await Task.Delay(80);
-        _mainCamMultiChannelPerlin.m_AmplitudeGain = 0f;
+        DOVirtual.Float(0, 1, 0.3f, (f) => { }).OnComplete(() =>
+        {
+            _mainCamMultiChannelPerlin.m_AmplitudeGain = 0f;
+        });
     }
 
     public Fish GetFish()
